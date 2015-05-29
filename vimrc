@@ -52,7 +52,7 @@ Plugin 'majutsushi/tagbar'
 "Plugin 'Townk/vim-autoclose'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'brookhong/k.vim'
-Plugin 'mileszs/ack.vim'
+"Plugin 'mileszs/ack.vim'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-colors-solarized'
@@ -81,7 +81,7 @@ let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_seed_identifiers_with_syntax=1 
+let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -108,8 +108,8 @@ set autoindent
 
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
-"map <silent> <F9> :TlistToggle<cr> 
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
+"map <silent> <F9> :TlistToggle<cr>
 "
 "-rw-r--r-- 1 root root 2476 10月 21 00:10 blue.vim
 "-rw-r--r-- 1 root root 2990 10月 21 00:10 darkblue.vim
@@ -131,15 +131,16 @@ let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 "-rw-r--r-- 1 root root 1629 10月 21 00:10 torte.vim
 "-rw-r--r-- 1 root root 1840 10月 21 00:10 zellner.vim
 
-"colorscheme ron 
-"if has("gui_running")
-"let g:solarized_termcolors=256
-"set background=dark
-"set background=light
-colorscheme elflord 
-"let g:solarized_termcolors=256
-"endif
-let g:molokai_original = 1
+"colorscheme ron
+if has('gui_running')
+        "set background=light
+        set background=dark
+        "colorscheme solarized
+        colorscheme desert
+        set guifont=Source\ Code\ Pro\ for\ Powerline\ 12
+else
+        colorscheme evening
+endif
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
 
 map <C-A> :A<cr>
@@ -171,30 +172,23 @@ let g:tagbar_type_go = {
     \ },
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
-	\ }
+        \ }
 
 
 function Search_Word()
-	let w = expand("<cword>") " 在当前光标位置抓词
-	execute "vimgrep " . w . " **/*.go"
+        let w = expand("<cword>") " 在当前光标位置抓词
+        execute "vimgrep " . w . " **/*.go"
 endfunction
 
 
 autocmd BufWritePre *.go :GoImports
-"autocmd VimEnter * :TagbarToggle
-"autocmd BufReadPost * :TagbarToggle
-"autocmd BufWinEnter * :TagbarToggle
-"autocmd BufEnter * :TagbarToggle
-"set guifont=Bitstream_Vera_Sans_Mono:h10:cANSI
-"set guifont=BitstreamVeraSansMono\ 10
-"set guifont=DejaVuSansMono\ 10
 set guifont=UbuntuMono\ 10
 "autocmd BufReadPost * :NERDTree
 
 
 func! GOBuild()
-	exec "w"
-	exec "!go build %"
+        exec "w"
+        exec "!go build %"
 endfunc
 
 " -------------- Key Mapping
@@ -230,4 +224,10 @@ let g:ctrlp_working_path_mode = '0'
 let g:airline_powerline_fonts = 1
 
 autocmd VimEnter * nested :call tagbar#autoopen(1)
+"let g:airline_theme='delek'
 
+" cursor always on the middle of window
+set so=999
+
+" highlight current line
+set cursorline
