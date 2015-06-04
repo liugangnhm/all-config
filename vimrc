@@ -35,7 +35,7 @@ Plugin 'SirVer/ultisnips'
 " " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 
-Plugin 'vim-scripts/taglist.vim'
+"Plugin 'vim-scripts/taglist.vim'
 
 Plugin 'kien/ctrlp.vim'
 
@@ -56,6 +56,13 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-colors-solarized'
+
+" smooth scroll
+"Plugin 'yonchu/accelerated-smooth-scroll'
+Plugin 'vim-scripts/cmdline-completion'
+Plugin 'airblade/vim-gitgutter'
+"Plugin 'gcmt/wildfire.vim'
+Plugin 'terryma/vim-expand-region'
 
 
 call vundle#end()            " required
@@ -81,7 +88,7 @@ let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_seed_identifiers_with_syntax=1 
 let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -104,12 +111,12 @@ set sw=4
 set tabstop=4
 set softtabstop=4
 set autoindent
-"set nu
+set nu
 
 let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
-"map <silent> <F9> :TlistToggle<cr>
+let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
+"map <silent> <F9> :TlistToggle<cr> 
 "
 "-rw-r--r-- 1 root root 2476 10月 21 00:10 blue.vim
 "-rw-r--r-- 1 root root 2990 10月 21 00:10 darkblue.vim
@@ -131,15 +138,18 @@ let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 "-rw-r--r-- 1 root root 1629 10月 21 00:10 torte.vim
 "-rw-r--r-- 1 root root 1840 10月 21 00:10 zellner.vim
 
-"colorscheme ron
+"colorscheme ron 
 if has('gui_running')
-        "set background=light
-        set background=dark
-        "colorscheme solarized
-        colorscheme desert
-        set guifont=Source\ Code\ Pro\ for\ Powerline\ 12
+	"set background=light
+	"set background=dark
+	"colorscheme solarized
+	colorscheme desert
+	set guifont=Source\ Code\ Pro\ for\ Powerline\ 12
+	" highlight current line
+	set cursorline
 else
-        colorscheme evening
+	"colorscheme desert  
+	"hi cursorline cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 endif
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
 
@@ -172,12 +182,12 @@ let g:tagbar_type_go = {
     \ },
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
-        \ }
+	\ }
 
 
 function Search_Word()
-        let w = expand("<cword>") " 在当前光标位置抓词
-        execute "vimgrep " . w . " **/*.go"
+	let w = expand("<cword>") " 在当前光标位置抓词
+	execute "vimgrep " . w . " **/*.go"
 endfunction
 
 
@@ -187,8 +197,8 @@ set guifont=UbuntuMono\ 10
 
 
 func! GOBuild()
-        exec "w"
-        exec "!go build %"
+	exec "w"
+	exec "!go build %"
 endfunc
 
 " -------------- Key Mapping
@@ -229,5 +239,13 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 " cursor always on the middle of window
 set so=999
 
-" highlight current line
-set cursorline
+
+" This selects the next closest text object.
+" let g:wildfire_fuel_map = "<ENTER>"
+
+" This selects the previous closest text object.
+" let g:wildfire_water_map = "<BS>"
+" let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
+
+map <SPACE> <Plug>(expand_region_expand)
+map <BS> <Plug>(expand_region_shrink)
