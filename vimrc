@@ -63,7 +63,12 @@ Plugin 'vim-scripts/cmdline-completion'
 Plugin 'airblade/vim-gitgutter'
 "Plugin 'gcmt/wildfire.vim'
 Plugin 'terryma/vim-expand-region'
+Plugin 'fabi1cazenave/kalahari.vim'
+Plugin 'justincampbell/vim-railscasts'
+Plugin 'vim-scripts/abbott.vim'
+Plugin 'jiangmiao/auto-pairs'
 
+" Plugin 'scrooloose/syntastic'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -83,15 +88,16 @@ set incsearch
 set ignorecase
 set completeopt=longest,menu
 
-let g:ycm_global_ycm_extra_conf = '~/bin/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf = '~/bin/.ycm_extra_conf.py'
 let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_seed_identifiers_with_syntax=1 
 let g:ycm_confirm_extra_conf=0
-let g:ycm_complete_in_comments = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_complete_in_comments = 0
+let g:ycm_collect_identifiers_from_tags_files = 0
+let g:ycm_cache_omnifunc=0
 "在字符串输入中也能补全
 let g:ycm_complete_in_strings = 1
 ""注释和字符串中的文字也会被收入补全
@@ -143,12 +149,19 @@ if has('gui_running')
 	"set background=light
 	"set background=dark
 	"colorscheme solarized
-	colorscheme desert
-	set guifont=Source\ Code\ Pro\ for\ Powerline\ 12
+	"colorscheme desert
+	"colorscheme kalahari 
+	colorscheme railscasts 
+	"colorschem abbott
+	"set guifont=Source\ Code\ Pro\ for\ Powerline\ 12
+	set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
 	" highlight current line
 	set cursorline
 else
-	"colorscheme desert  
+	colorscheme desert  
+	"colorscheme kalahari 
+	"colorscheme railscasts 
+	"colorschem abbott
 	"hi cursorline cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 endif
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
@@ -202,7 +215,8 @@ func! GOBuild()
 endfunc
 
 " -------------- Key Mapping
-nmap <C-D> gd
+let g:go_def_mapping_enabled=0
+nmap <C-D> :GoDef<CR>
 "map <C-b> :GoBuild<cr>
 map <M-b> :call GOBuild() <CR>
 "map <silent> <C-b> :!go build -o a.out<cr>
@@ -217,6 +231,8 @@ map <Leader>sw :call Search_Word()<CR>:botright copen<CR>
 map <Leader>ag :Ag<CR>
 
 map <C-t> :CtrlPBuffer<cr>
+map :copen<CR>:botright copen<CR>
+map :cwindow<CR>:botright cwindow<CR>
 
 " show byte-offset in status bar
 " set statusline+=%o
@@ -249,3 +265,30 @@ set so=999
 
 map <SPACE> <Plug>(expand_region_expand)
 map <BS> <Plug>(expand_region_shrink)
+
+
+
+"let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
+let g:go_oracle_scope='github.com/cockroachdb/cockroach'
+
+
+function g:GolangAutocompleteOption()
+  if &filetype=="go"
+  endif
+endfunction
+autocmd FileType * call g:GolangAutocompleteOption()
+
+
+
+autocmd FileType qf wincmd J
+
+
+" syntastic
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
