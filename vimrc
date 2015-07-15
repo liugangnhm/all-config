@@ -287,3 +287,4 @@ inoremap <esc> <nop>
 autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
+autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
