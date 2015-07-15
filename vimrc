@@ -55,20 +55,23 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'mileszs/ack.vim'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
-Plugin 'vim-colors-solarized'
+"Plugin 'vim-colors-solarized'
 
 " smooth scroll
 "Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'vim-scripts/cmdline-completion'
-Plugin 'airblade/vim-gitgutter'
+"Plugin 'airblade/vim-gitgutter'
 "Plugin 'gcmt/wildfire.vim'
 Plugin 'terryma/vim-expand-region'
-Plugin 'fabi1cazenave/kalahari.vim'
-Plugin 'justincampbell/vim-railscasts'
-Plugin 'vim-scripts/abbott.vim'
+"Plugin 'fabi1cazenave/kalahari.vim'
+"Plugin 'justincampbell/vim-railscasts'
+"Plugin 'vim-scripts/abbott.vim'
 Plugin 'jiangmiao/auto-pairs'
 
 " Plugin 'scrooloose/syntastic'
+" auto tag update
+"Plugin 'vim-scripts/AutoTag'
+Plugin 'craigemery/vim-autotag'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -148,12 +151,7 @@ let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口
 if has('gui_running')
 	"set background=light
 	"set background=dark
-	"colorscheme solarized
-	"colorscheme desert
-	"colorscheme kalahari 
-	colorscheme railscasts 
-	"colorschem abbott
-	"set guifont=Source\ Code\ Pro\ for\ Powerline\ 12
+	colorscheme desert  
 	set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
 	" highlight current line
 	set cursorline
@@ -208,22 +206,11 @@ autocmd BufWritePre *.go :GoImports
 set guifont=UbuntuMono\ 10
 "autocmd BufReadPost * :NERDTree
 
-
-func! GOBuild()
-	exec "w"
-	exec "!go build %"
-endfunc
-
 " -------------- Key Mapping
 let g:go_def_mapping_enabled=0
-nmap <C-D> :GoDef<CR>
-"map <C-b> :GoBuild<cr>
-map <M-b> :call GOBuild() <CR>
-"map <silent> <C-b> :!go build -o a.out<cr>
 map <2-LeftMouse> gd
 map <RightMouse> <C-o>
 map <F9> :TagbarToggle<cr>
-map <C-i> :GoInfo<cr>
 map <C-x> :q<cr>
 map <F10> :cw<cr>
 map <F12> :ccl<cr>
@@ -231,8 +218,8 @@ map <Leader>sw :call Search_Word()<CR>:botright copen<CR>
 map <Leader>ag :Ag<CR>
 
 map <C-t> :CtrlPBuffer<cr>
-map :copen<CR>:botright copen<CR>
-map :cwindow<CR>:botright cwindow<CR>
+"map :copen<CR>:botright copen<CR>
+"map :cwindow<CR>:botright cwindow<CR>
 
 " show byte-offset in status bar
 " set statusline+=%o
@@ -266,19 +253,20 @@ set so=999
 map <SPACE> <Plug>(expand_region_expand)
 map <BS> <Plug>(expand_region_shrink)
 
-
-
-"let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
-let g:go_oracle_scope='github.com/cockroachdb/cockroach'
-
-
-function g:GolangAutocompleteOption()
-  if &filetype=="go"
+" golang
+function g:GolangOption()
+  if &filetype=="go" 
+	  let g:go_oracle_scope='github.com/cockroachdb/cockroach'
+	  "let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
+	  map <C-D> :GoDef<CR>
+	  map <F4> :GoImplements<CR>
+	  map <F5> :GoReferrers<CR>
+	  map <F6> :GoTest<CR>
+	  map <F7> :GoCallers<CR> 
+	  map <C-i> :GoInfo<cr>
   endif
 endfunction
-autocmd FileType * call g:GolangAutocompleteOption()
-
-
+autocmd FileType * call g:GolangOption()
 
 autocmd FileType qf wincmd J
 
@@ -292,3 +280,10 @@ autocmd FileType qf wincmd J
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
+
+
+inoremap jk <esc>
+inoremap <esc> <nop>
+autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
+autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
+autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
