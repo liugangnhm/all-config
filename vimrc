@@ -269,6 +269,15 @@ function g:GolangOption()
 endfunction
 autocmd FileType * call g:GolangOption()
 
+function g:SetFont()
+	if has('mac')
+		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold:h14
+	else
+		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold\ 14
+	endif
+endfunction
+autocmd VimEnter * call g:SetFont()
+
 autocmd FileType qf wincmd J
 
 
