@@ -295,7 +295,7 @@ let g:ctrlp_follow_symlinks = 2
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
                           \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 
-inoremap jk <esc>
+inoremap jk <esc>:w<cr>
 inoremap <esc> <nop>
 autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
