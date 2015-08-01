@@ -301,6 +301,16 @@ autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
 autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
+
+
+" Vimscript file settings ---------------------- {{{
+augroup filetype_vim
+    autocmd!
+	" found vimscript automatic
+	autocmd FileType vim setlocal foldmethod=marker 
+augroup END
+" }}}
+
 let g:has_exit_ctrlp_buf = 0
 " auto jump to tagbar and search tag
 function g:EnterEnter()
