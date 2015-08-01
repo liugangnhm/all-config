@@ -232,7 +232,7 @@ let g:ctrlp_by_filename = 1
 
 "set mouse=a
 
-map <Leader>t :CtrlPTag <cr>
+"map <Leader>t :CtrlPTag <cr>
 let g:ctrlp_working_path_mode = '0'
 
 let g:airline_powerline_fonts = 1
@@ -291,6 +291,9 @@ autocmd FileType qf wincmd J
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
 
+let g:ctrlp_follow_symlinks = 2
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+                          \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 
 inoremap jk <esc>
 inoremap <esc> <nop>
@@ -298,3 +301,24 @@ autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
 autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
+let g:has_exit_ctrlp_buf = 0
+" auto jump to tagbar and search tag
+function g:EnterEnter()
+	let g:has_exit_ctrlp_buf = 1
+	execute "sleep 100m"
+	if g:has_exit_ctrlp_buf 
+		echom "has exit buf"
+		execute "call feedkeys(\"\<CR>\")"
+		let g:has_exit_ctrlp_buf = 0
+	endif
+endfunction
+
+function g:SearchTagAndJump()
+  let g:ctrlp_buffer_func = {
+    \ 'exit':  'g:EnterEnter',
+    \ }
+	execute "CtrlPLine __Tagbar__"
+	let g:ctrlp_buffer_func = {}
+endfunction 
+"nnoremap <leader>t :CtrlPLine __Tagbar__<cr>
+nnoremap <leader>t :call g:SearchTagAndJump()<cr>
