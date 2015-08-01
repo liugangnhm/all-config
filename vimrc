@@ -72,6 +72,7 @@ Plugin 'jiangmiao/auto-pairs'
 " auto tag update
 "Plugin 'vim-scripts/AutoTag'
 Plugin 'craigemery/vim-autotag'
+Plugin 'tacahiroy/ctrlp-funky'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
