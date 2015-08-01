@@ -310,9 +310,8 @@ augroup filetype_vim
 	autocmd FileType vim setlocal foldmethod=marker 
 augroup END
 " }}}
-
+" auto jump to tagbar and search tag and then jump to tag{{{
 let g:has_exit_ctrlp_buf = 0
-" auto jump to tagbar and search tag
 function g:EnterEnter()
 	let g:has_exit_ctrlp_buf = 1
 	execute "sleep 100m"
@@ -332,3 +331,4 @@ function g:SearchTagAndJump()
 endfunction 
 "nnoremap <leader>t :CtrlPLine __Tagbar__<cr>
 nnoremap <leader>t :call g:SearchTagAndJump()<cr>
+" }}}
