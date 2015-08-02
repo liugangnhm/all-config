@@ -297,11 +297,11 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 
 inoremap jk <esc>:w<cr>
 inoremap <esc> <nop>
+nnoremap ss :w<cr>
 autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
 autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
-
 
 " Vimscript file settings ---------------------- {{{
 augroup filetype_vim
