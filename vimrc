@@ -260,6 +260,7 @@ function g:GolangOption()
 	  let g:go_oracle_scope='github.com/cockroachdb/cockroach'
 	  "let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
 	  map <C-D> :GoDef<CR>
+	  map <F3> :GoChannelPeers
 	  map <F4> :GoImplements<CR>
 	  map <F5> :GoReferrers<CR>
 	  map <F6> :GoTest<CR>
