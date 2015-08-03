@@ -266,6 +266,7 @@ function g:GolangOption()
 	  map <F6> :GoTest<CR>
 	  map <F7> :GoCallers<CR> 
 	  map <C-i> :GoInfo<cr>
+	  map <leader>b :GoInstall<cr>
   endif
 endfunction
 autocmd FileType * call g:GolangOption()
