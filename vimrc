@@ -273,7 +273,7 @@ autocmd FileType * call g:GolangOption()
 
 function g:SetFont()
 	if has('mac')
-		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold:h14
+		set guifont=Sauce\ Code\ Powerline\ Semibold:h14
 	else
 		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold\ 14
 	endif
