@@ -237,16 +237,17 @@ map <BS> <Plug>(expand_region_shrink)
 " golang
 function g:GolangOption()
   if &filetype=="go" 
-	  let g:go_oracle_scope='github.com/cockroachdb/cockroach'
+	  let g:go_oracle_scope='github.com/cockroachdb'
 	  "let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
 	  map <C-D> :GoDef<CR>
-	  map <F3> :GoChannelPeers
+	  map <F3> :GoChannelPeers<CR>
 	  map <F4> :GoImplements<CR>
 	  map <F5> :GoReferrers<CR>
 	  map <F6> :GoTest<CR>
 	  map <F7> :GoCallers<CR> 
 	  map <C-i> :GoInfo<cr>
 	  map <leader>b :GoInstall<cr>
+	  nnoremap <leader>ft :GoTestFunc<cr>
   endif
 endfunction
 autocmd FileType * call g:GolangOption()
