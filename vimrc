@@ -127,26 +127,6 @@ let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只�
 let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
 let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
 "map <silent> <F9> :TlistToggle<cr> 
-"
-"-rw-r--r-- 1 root root 2476 10月 21 00:10 blue.vim
-"-rw-r--r-- 1 root root 2990 10月 21 00:10 darkblue.vim
-"-rw-r--r-- 1 root root  548 10月 21 00:10 default.vim
-"-rw-r--r-- 1 root root 2522 10月 21 00:10 delek.vim
-"-rw-r--r-- 1 root root 2812 10月 21 00:10 desert.vim
-"-rw-r--r-- 1 root root 1666 10月 21 00:10 elflord.vim
-"-rw-r--r-- 1 root root 2476 10月 21 00:10 evening.vim
-"-rw-r--r-- 1 root root 1958 10月 21 00:10 industry.vim
-"-rw-r--r-- 1 root root 3476 10月 21 00:10 koehler.vim
-"-rw-r--r-- 1 root root 2460 10月 21 00:10 morning.vim
-"-rw-r--r-- 1 root root 2006 10月 21 00:10 murphy.vim
-"-rw-r--r-- 1 root root 1037 10月 21 00:10 pablo.vim
-"-rw-r--r-- 1 root root 2673 10月 21 00:10 peachpuff.vim
-"-rw-r--r-- 1 root root 2640 10月 21 00:10 README.txt
-"-rw-r--r-- 1 root root 1393 10月 21 00:10 ron.vim
-"-rw-r--r-- 1 root root 2720 10月 21 00:10 shine.vim
-"-rw-r--r-- 1 root root 2445 10月 21 00:10 slate.vim
-"-rw-r--r-- 1 root root 1629 10月 21 00:10 torte.vim
-"-rw-r--r-- 1 root root 1840 10月 21 00:10 zellner.vim
 
 "colorscheme ron 
 if has('gui_running')
