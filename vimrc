@@ -1,3 +1,4 @@
+" bundle code and plugin {{{
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -7,47 +8,24 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
-" Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
-
-" All of your Plugins must be added before the following line
 Plugin 'Valloric/YouCompleteMe'
-
-" Track the engine.
 Plugin 'SirVer/ultisnips'
-"
 " " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
-
 "Plugin 'vim-scripts/taglist.vim'
-
 Plugin 'kien/ctrlp.vim'
-
 Plugin 'tomtom/tcomment_vim'
-
 Plugin 'vim-scripts/a.vim'
-
 Plugin 'fatih/vim-go'
-
 Plugin 'molokai'
 Plugin 'majutsushi/tagbar'
-
 " auto close brace
 "Plugin 'Townk/vim-autoclose'
 Plugin 'scrooloose/nerdtree'
@@ -56,7 +34,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
 "Plugin 'vim-colors-solarized'
-
 " smooth scroll
 "Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'vim-scripts/cmdline-completion'
@@ -67,7 +44,6 @@ Plugin 'terryma/vim-expand-region'
 "Plugin 'justincampbell/vim-railscasts'
 "Plugin 'vim-scripts/abbott.vim'
 Plugin 'jiangmiao/auto-pairs'
-
 " Plugin 'scrooloose/syntastic'
 " auto tag update
 "Plugin 'vim-scripts/AutoTag'
@@ -87,11 +63,20 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+" }}}
+" basic vim config {{{
 set hlsearch
 set incsearch
 set ignorecase
+set cin
+set sw=4
+set tabstop=4
+set softtabstop=4
+set autoindent
+set nu
 set completeopt=longest,menu
-
+" }}}
+" ycm config {{{
 "let g:ycm_global_ycm_extra_conf = '~/bin/.ycm_extra_conf.py'
 let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_add_preview_to_completeopt = 1
@@ -107,47 +92,24 @@ let g:ycm_complete_in_strings = 1
 ""注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 nmap <M-g> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
-
-
+" }}}
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<m-j>"
 let g:UltiSnipsJumpBackwardTrigger="<m-j>"
 let g:UltiSnipsEditSplit="vertical"
 
-
-set cin
-set sw=4
-set tabstop=4
-set softtabstop=4
-set autoindent
-set nu
-
-let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-let Tlist_Use_Right_Window = 1         "在右侧窗口中显示taglist窗口 
-"map <silent> <F9> :TlistToggle<cr> 
-
-"colorscheme ron 
 if has('gui_running')
-	"set background=light
-	"set background=dark
 	colorscheme desert  
-	set guifont=Ubuntu\ Mono\ derivative\ Powerline\ 10
 	" highlight current line
 	set cursorline
 else
 	colorscheme desert  
-	"colorscheme kalahari 
-	"colorscheme railscasts 
-	"colorschem abbott
-	"hi cursorline cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 endif
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
-
 map <C-A> :A<cr>
 
-
+" tagbar_type_go {{{
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -176,15 +138,9 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 	\ }
 
-
-function Search_Word()
-	let w = expand("<cword>") " 在当前光标位置抓词
-	execute "vimgrep " . w . " **/*.go"
-endfunction
-
+" }}}
 
 autocmd BufWritePre *.go :GoImports
-set guifont=UbuntuMono\ 10
 "autocmd BufReadPost * :NERDTree
 
 " -------------- Key Mapping
@@ -252,6 +208,7 @@ function g:GolangOption()
 endfunction
 autocmd FileType * call g:GolangOption()
 
+" set font {{{
 function g:SetFont()
 	if has('mac')
 		set guifont=Sauce\ Code\ Powerline\ Semibold:h14
@@ -260,14 +217,9 @@ function g:SetFont()
 	endif
 endfunction
 autocmd VimEnter * call g:SetFont()
+" }}}
 
 autocmd FileType qf wincmd J
-
-
-" syntastic
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
@@ -277,15 +229,18 @@ autocmd FileType qf wincmd J
 let g:ctrlp_follow_symlinks = 2
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
                           \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
-
+" convenient key maps {{{
 inoremap jk <esc>:w<cr>
-inoremap <esc> <nop>
 nnoremap ss :w<cr>
+inoremap <C-L> <esc>li
+"inoremap <esc> <nop>
+" }}}
+" comment key {{{
 autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
 autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
 autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
-
+" }}}
 " Vimscript file settings ---------------------- {{{
 augroup filetype_vim
     autocmd!
