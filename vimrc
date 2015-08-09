@@ -232,7 +232,10 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 " convenient key maps {{{
 inoremap jk <esc>:w<cr>
 nnoremap ss :w<cr>
-inoremap <C-L> <esc>li
+" move left in insert mode
+inoremap <C-S-l> <esc>lli
+" move to end of line in insert mode
+inoremap <C-S-,> <esc>
 "inoremap <esc> <nop>
 " }}}
 " comment key {{{
