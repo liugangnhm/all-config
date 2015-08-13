@@ -100,11 +100,14 @@ let g:UltiSnipsJumpBackwardTrigger="<m-j>"
 let g:UltiSnipsEditSplit="vertical"
 
 if has('gui_running')
-	colorscheme desert  
+	"colorscheme desert  
 	" highlight current line
+	syntax enable
+	set background=dark
+	colorscheme solarized
 	set cursorline
 else
-	colorscheme desert  
+	"colorscheme desert  
 endif
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
 map <C-A> :A<cr>
@@ -168,7 +171,7 @@ let g:ctrlp_by_filename = 1
 
 "set mouse=a
 
-"map <Leader>t :CtrlPTag <cr>
+nnoremap <C-r> :CtrlPBufTag <cr>
 let g:ctrlp_working_path_mode = '0'
 
 let g:airline_powerline_fonts = 1
@@ -211,7 +214,7 @@ autocmd FileType * call g:GolangOption()
 " set font {{{
 function g:SetFont()
 	if has('mac')
-		set guifont=Sauce\ Code\ Powerline\ Semibold:h14
+		set guifont=Sauce\ Code\ Powerline\:h13
 	else
 		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold\ 14
 	endif
@@ -273,3 +276,8 @@ endfunction
 "nnoremap <leader>t :CtrlPLine __Tagbar__<cr>
 nnoremap <leader>t :call g:SearchTagAndJump()<cr>
 " }}}
+" ctrlp tag bin
+let g:ctrlp_buftag_types = {
+	\ 'go'     	   : '--language-force=go --golang-types=ftv',
+    \ }
+
