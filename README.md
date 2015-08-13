@@ -13,3 +13,5 @@ Add the following to ~/.ctags:
 --regex-Go=/var[ \t]+([a-zA-Z_][a-zA-Z0-9_]+)/\1/d,var/
 --regex-Go=/type[ \t]+([a-zA-Z_][a-zA-Z0-9_]+)/\1/d,type/
 ```
+https://github.com/jordwalke/VimBox/blob/master/dotVim/pluginRc/ctrlPVimRc
+http://go-wise.blogspot.jp/2011/09/using-ctags-with-go.html
