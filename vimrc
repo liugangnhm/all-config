@@ -233,7 +233,7 @@ let g:ctrlp_follow_symlinks = 2
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
                           \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 " convenient key maps {{{
-inoremap jk <esc>:w<cr>
+inoremap jk <esc><esc>:w<cr>
 nnoremap ss :w<cr>
 " move left in insert mode
 inoremap <C-S-l> <esc>lli
