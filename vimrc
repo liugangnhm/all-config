@@ -37,7 +37,7 @@ Plugin 'bling/vim-airline'
 " smooth scroll
 "Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'vim-scripts/cmdline-completion'
-"Plugin 'airblade/vim-gitgutter'
+Plugin 'airblade/vim-gitgutter'
 "Plugin 'gcmt/wildfire.vim'
 Plugin 'terryma/vim-expand-region'
 "Plugin 'fabi1cazenave/kalahari.vim'
@@ -49,6 +49,8 @@ Plugin 'jiangmiao/auto-pairs'
 "Plugin 'vim-scripts/AutoTag'
 Plugin 'craigemery/vim-autotag'
 Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'jonathanfilip/vim-lucius'
+Plugin 'godlygeek/csapprox'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -98,17 +100,18 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<m-j>"
 let g:UltiSnipsJumpBackwardTrigger="<m-j>"
 let g:UltiSnipsEditSplit="vertical"
+syntax enable
 
 if has('gui_running')
-	"colorscheme desert  
-	" highlight current line
-	syntax enable
-	set background=dark
 	colorscheme solarized
 	set cursorline
 else
-	"colorscheme desert  
+	let g:lucius_style = "dark"
+	let g:lucius_contrast = "normal"
+	let g:lucius_contrast_bg = "normal"
+	colorscheme lucius
 endif
+
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
 map <C-A> :A<cr>
 
@@ -172,6 +175,7 @@ let g:ctrlp_by_filename = 1
 "set mouse=a
 
 nnoremap <C-r> :CtrlPBufTag <cr>
+nnoremap <leader>pq :CtrlPQuickfix<cr>
 let g:ctrlp_working_path_mode = '0'
 
 let g:airline_powerline_fonts = 1
@@ -214,7 +218,7 @@ autocmd FileType * call g:GolangOption()
 " set font {{{
 function g:SetFont()
 	if has('mac')
-		set guifont=Sauce\ Code\ Powerline\:h13
+		set guifont=Sauce\ Code\ Powerline\:h12
 	else
 		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold\ 14
 	endif
@@ -281,3 +285,5 @@ let g:ctrlp_buftag_types = {
 	\ 'go'     	   : '--language-force=go --golang-types=ftv',
     \ }
 
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+set t_Co=256
