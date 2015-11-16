@@ -49,8 +49,9 @@ Plugin 'jiangmiao/auto-pairs'
 "Plugin 'vim-scripts/AutoTag'
 Plugin 'craigemery/vim-autotag'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'jonathanfilip/vim-lucius'
+Plugin 'szw/vim-tags'
 Plugin 'godlygeek/csapprox'
+Plugin 'sheerun/vim-wombat-scheme'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -100,16 +101,22 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<m-j>"
 let g:UltiSnipsJumpBackwardTrigger="<m-j>"
 let g:UltiSnipsEditSplit="vertical"
-syntax enable
 
 if has('gui_running')
-	colorscheme solarized
 	set cursorline
+	"colorscheme molokai
+	colorscheme peachpuff
+	"colorscheme lucius
+	"colorscheme wombat
+	"LuciusDark
 else
-	let g:lucius_style = "dark"
-	let g:lucius_contrast = "normal"
-	let g:lucius_contrast_bg = "normal"
-	colorscheme lucius
+	"colorscheme molokai
+	colorscheme peachpuff
+	"colorscheme morning
+	"colorscheme lucius
+	"colorscheme wombat
+	"LuciusDarkHighContrast
+	"LuciusDark
 endif
 
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
@@ -171,11 +178,12 @@ map <C-t> :CtrlPBuffer<cr>
 "
 " ctrlp search file name only
 let g:ctrlp_by_filename = 1
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
 "set mouse=a
 
 nnoremap <C-r> :CtrlPBufTag <cr>
-nnoremap <leader>pq :CtrlPQuickfix<cr>
+nnoremap <C-e> :CtrlPTag <cr>
 let g:ctrlp_working_path_mode = '0'
 
 let g:airline_powerline_fonts = 1
@@ -184,7 +192,7 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 "let g:airline_theme='delek'
 
 " cursor always on the middle of window
-set so=999
+set so=10
 
 
 " This selects the next closest text object.
@@ -200,7 +208,8 @@ map <BS> <Plug>(expand_region_shrink)
 " golang
 function g:GolangOption()
   if &filetype=="go" 
-	  let g:go_oracle_scope='github.com/cockroachdb'
+	  "let g:go_oracle_scope='github.com/cockroachdb'
+	  let g:go_oracle_scope='github.com'
 	  "let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
 	  map <C-D> :GoDef<CR>
 	  map <F3> :GoChannelPeers<CR>
@@ -208,7 +217,7 @@ function g:GolangOption()
 	  map <F5> :GoReferrers<CR>
 	  map <F6> :GoTest<CR>
 	  map <F7> :GoCallers<CR> 
-	  map <C-i> :GoInfo<cr>
+	  "map <C-i> :GoInfo<cr>
 	  map <leader>b :GoInstall<cr>
 	  nnoremap <leader>ft :GoTestFunc<cr>
   endif
@@ -218,9 +227,13 @@ autocmd FileType * call g:GolangOption()
 " set font {{{
 function g:SetFont()
 	if has('mac')
-		set guifont=Sauce\ Code\ Powerline\:h12
+		set guifont=Sauce\ Code\ Powerline\:h13
 	else
-		set guifont=Ubuntu\ Mono\ derivative\ Powerline\ Bold\ 14
+		"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Bold\ 14
+		set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Bold\ 16
+		"set guifont=Consolas\ Bold\ 16
+		let g:PowerlineSymbols='fancy'
+		set encoding=utf8
 	endif
 endfunction
 autocmd VimEnter * call g:SetFont()
@@ -239,10 +252,11 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 " convenient key maps {{{
 inoremap jk <esc><esc>:w<cr>
 nnoremap ss :w<cr>
+nnoremap <SPACE> :
 " move left in insert mode
-inoremap <C-S-l> <esc>lli
+inoremap <C-l> <esc><esc>lli
 " move to end of line in insert mode
-inoremap <C-S-,> <esc>
+inoremap <M-l> <esc><esc>A
 "inoremap <esc> <nop>
 " }}}
 " comment key {{{
@@ -285,5 +299,58 @@ let g:ctrlp_buftag_types = {
 	\ 'go'     	   : '--language-force=go --golang-types=ftv',
     \ }
 
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
+
+au FileType qf call AdjustWindowHeight(5, 20)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
+nnoremap <F11> :cn<cr>
+noremap <c-F11> :cp<cr>
+
+
+"nnoremap <Leader>H :call<SID>LongLineHLToggle()<cr>
+"hi OverLength ctermbg=none cterm=none
+"match OverLength /\%>80v/
+"fun! s:LongLineHLToggle()
+ "if !exists('w:longlinehl')
+  "let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
+  "echo "Long lines highlighted"
+ "else
+  "call matchdelete(w:longlinehl)
+  "unl w:longlinehl
+  "echo "Long lines unhighlighted"
+ "endif
+"endfunction
+
+"set colorcolumn=80
+"highlight ColorColumn ctermbg=lightgray guibg=lightgray
+"hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
+"hi Normal ctermbg=White ctermfg=DarkGrey guifg=White guibg=grey20
 set t_Co=256
+set mouse=a
+
+ "putty
+if &term =~ "xterm"
+  " 256 colors
+  let &t_Co = 256
+  " restore screen after quitting
+  let &t_ti = "\<Esc>7\<Esc>[r\<Esc>[?47h"
+  let &t_te = "\<Esc>[?47l\<Esc>8"
+  if has("terminfo")
+    let &t_Sf = "\<Esc>[3%p1%dm"
+    let &t_Sb = "\<Esc>[4%p1%dm"
+  else
+    let &t_Sf = "\<Esc>[3%dm"
+    let &t_Sb = "\<Esc>[4%dm"
+  endif
+endif
+
+"let g:gitgutter_highlight_lines = 1
+let g:tagbar_width = 30
+set wrap
+set linebreak
+set showbreak=--->
