@@ -331,7 +331,7 @@ noremap <c-F11> :cp<cr>
 "hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
 "hi Normal ctermbg=White ctermfg=DarkGrey guifg=White guibg=grey20
 set t_Co=256
-set mouse=a
+"set mouse=a
 
  "putty
 if &term =~ "xterm"
