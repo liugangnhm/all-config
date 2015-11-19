@@ -354,4 +354,4 @@ let g:tagbar_width = 30
 set wrap
 set linebreak
 set showbreak=--->
-set clipboard=exlucde:.*
+set clipboard=exclude:.*
