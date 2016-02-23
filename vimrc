@@ -20,7 +20,7 @@ Plugin 'SirVer/ultisnips'
 " " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 "Plugin 'vim-scripts/taglist.vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'vim-scripts/a.vim'
 Plugin 'fatih/vim-go'
@@ -33,7 +33,7 @@ Plugin 'scrooloose/nerdtree'
 "Plugin 'mileszs/ack.vim'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
-"Plugin 'vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 " smooth scroll
 "Plugin 'yonchu/accelerated-smooth-scroll'
 Plugin 'vim-scripts/cmdline-completion'
@@ -52,6 +52,9 @@ Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'szw/vim-tags'
 Plugin 'godlygeek/csapprox'
 Plugin 'sheerun/vim-wombat-scheme'
+Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'KabbAmine/zeavim.vim'
+Plugin 'tell-k/vim-autopep8'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -90,9 +93,9 @@ let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments = 0
 let g:ycm_collect_identifiers_from_tags_files = 0
 let g:ycm_cache_omnifunc=0
-"在字符串输入中也能补全
+"\u5728\u5b57\u7b26\u4e32\u8f93\u5165\u4e2d\u4e5f\u80fd\u8865\u5168
 let g:ycm_complete_in_strings = 1
-""注释和字符串中的文字也会被收入补全
+""\u6ce8\u91ca\u548c\u5b57\u7b26\u4e32\u4e2d\u7684\u6587\u5b57\u4e5f\u4f1a\u88ab\u6536\u5165\u8865\u5168
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
 nmap <M-g> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
 " }}}
@@ -101,22 +104,14 @@ let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<m-j>"
 let g:UltiSnipsJumpBackwardTrigger="<m-j>"
 let g:UltiSnipsEditSplit="vertical"
+set t_Co=256
 
 if has('gui_running')
-	set cursorline
-	"colorscheme molokai
-	colorscheme peachpuff
-	"colorscheme lucius
-	"colorscheme wombat
-	"LuciusDark
+	colorscheme molokai
 else
-	"colorscheme molokai
-	colorscheme peachpuff
-	"colorscheme morning
-	"colorscheme lucius
-	"colorscheme wombat
-	"LuciusDarkHighContrast
-	"LuciusDark
+	let g:solarized_termcolors=256
+	colorscheme lucius
+	LuciusDark
 endif
 
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
@@ -155,6 +150,8 @@ let g:tagbar_type_go = {
 
 autocmd BufWritePre *.go :GoImports
 "autocmd BufReadPost * :NERDTree
+"bind NERDTree triggle
+map <F6> :NERDTreeToggle<cr>
 
 " -------------- Key Mapping
 let g:go_def_mapping_enabled=0
@@ -163,7 +160,7 @@ map <RightMouse> <C-o>
 map <F9> :TagbarToggle<cr>
 map <C-x> :q<cr>
 map <F10> :cw<cr>
-map <F12> :ccl<cr>
+map <F12> :ccl<cr>:lcl<cr>
 map <Leader>sw :call Search_Word()<CR>:botright copen<CR>
 map <Leader>ag :Ag<CR>
 
@@ -185,6 +182,7 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 nnoremap <C-r> :CtrlPBufTag <cr>
 nnoremap <C-e> :CtrlPTag <cr>
 let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 let g:airline_powerline_fonts = 1
 
@@ -192,7 +190,7 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 "let g:airline_theme='delek'
 
 " cursor always on the middle of window
-set so=10
+set so=999
 
 
 " This selects the next closest text object.
@@ -208,17 +206,11 @@ map <BS> <Plug>(expand_region_shrink)
 " golang
 function g:GolangOption()
   if &filetype=="go" 
-	  "let g:go_oracle_scope='github.com/cockroachdb'
 	  let g:go_oracle_scope='github.com'
-	  "let g:go_oracle_scope='github.com/cockroachdb/cockroach  github.com/cockroachdb/clm  github.com/cockroachdb/busaccess '
 	  map <C-D> :GoDef<CR>
 	  map <F3> :GoChannelPeers<CR>
 	  map <F4> :GoImplements<CR>
 	  map <F5> :GoReferrers<CR>
-	  map <F6> :GoTest<CR>
-	  map <F7> :GoCallers<CR> 
-	  "map <C-i> :GoInfo<cr>
-	  map <leader>b :GoInstall<cr>
 	  nnoremap <leader>ft :GoTestFunc<cr>
   endif
 endfunction
@@ -229,9 +221,7 @@ function g:SetFont()
 	if has('mac')
 		set guifont=Sauce\ Code\ Powerline\:h13
 	else
-		"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Bold\ 14
-		set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ Bold\ 16
-		"set guifont=Consolas\ Bold\ 16
+		set guifont=Source\ Code\ Pro\ for\ Powerline\ Bold\ 13
 		let g:PowerlineSymbols='fancy'
 		set encoding=utf8
 	endif
@@ -257,6 +247,8 @@ nnoremap <SPACE> :
 inoremap <C-l> <esc><esc>lli
 " move to end of line in insert mode
 inoremap <M-l> <esc><esc>A
+nnoremap <Leader>cpw viw"+y
+nnoremap <Leader>pl :CtrlPLine<cr>
 "inoremap <esc> <nop>
 " }}}
 " comment key {{{
@@ -299,8 +291,8 @@ let g:ctrlp_buftag_types = {
 	\ 'go'     	   : '--language-force=go --golang-types=ftv',
     \ }
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
 
 
 au FileType qf call AdjustWindowHeight(5, 20)
@@ -311,47 +303,23 @@ endfunction
 nnoremap <F11> :cn<cr>
 noremap <c-F11> :cp<cr>
 
-
-"nnoremap <Leader>H :call<SID>LongLineHLToggle()<cr>
-"hi OverLength ctermbg=none cterm=none
-"match OverLength /\%>80v/
-"fun! s:LongLineHLToggle()
- "if !exists('w:longlinehl')
-  "let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
-  "echo "Long lines highlighted"
- "else
-  "call matchdelete(w:longlinehl)
-  "unl w:longlinehl
-  "echo "Long lines unhighlighted"
- "endif
-"endfunction
-
-"set colorcolumn=80
-"highlight ColorColumn ctermbg=lightgray guibg=lightgray
-"hi Normal ctermbg=DarkGrey ctermfg=White guifg=White guibg=grey20
-"hi Normal ctermbg=White ctermfg=DarkGrey guifg=White guibg=grey20
-set t_Co=256
-"set mouse=a
-
- "putty
-if &term =~ "xterm"
-  " 256 colors
-  let &t_Co = 256
-  " restore screen after quitting
-  let &t_ti = "\<Esc>7\<Esc>[r\<Esc>[?47h"
-  let &t_te = "\<Esc>[?47l\<Esc>8"
-  if has("terminfo")
-    let &t_Sf = "\<Esc>[3%p1%dm"
-    let &t_Sb = "\<Esc>[4%p1%dm"
-  else
-    let &t_Sf = "\<Esc>[3%dm"
-    let &t_Sb = "\<Esc>[4%dm"
-  endif
-endif
-
-"let g:gitgutter_highlight_lines = 1
+let g:gitgutter_highlight_lines = 1
 let g:tagbar_width = 30
 set wrap
 set linebreak
-set showbreak=--->
+set showbreak=\ \ \ \  
 set clipboard=exclude:.*
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+nnoremap <c-b> k8
+nnoremap <c-f> j8
+
+" new line in insert mode
+inoremap <S-CR> <Esc>o
+
+" auto load changed file
+set autoread
+
+let g:autopep8_disable_show_diff=1
