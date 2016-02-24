@@ -55,6 +55,7 @@ Plugin 'sheerun/vim-wombat-scheme'
 Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'KabbAmine/zeavim.vim'
 Plugin 'tell-k/vim-autopep8'
+Plugin 'MattesGroeger/vim-bookmarks'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -322,3 +323,8 @@ inoremap <S-CR> <Esc>o
 set autoread
 
 let g:autopep8_disable_show_diff=1
+
+" bookmark options
+let g:bookmark_highlight_lines = 1
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_close = 1
