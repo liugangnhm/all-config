@@ -215,6 +215,8 @@ function g:GolangOption()
   endif
 endfunction
 autocmd FileType * call g:GolangOption()
+" auto call :GoInfo when move cursor
+let g:go_auto_type_info = 1
 
 " set font {{{
 function g:SetFont()
