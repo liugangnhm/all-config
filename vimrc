@@ -110,8 +110,7 @@ if has('gui_running')
 	colorscheme molokai
 else
 	let g:solarized_termcolors=256
-	colorscheme lucius
-	LuciusDark
+	colorscheme molokai
 endif
 
 hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
