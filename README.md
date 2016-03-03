@@ -1,11 +1,8 @@
-# vimrc
-my own vimrc file. always adjusted.
-
-# key maps
-* search current file'tag: `<leader>t`  (implemented using ctrlPLine)
+This repository contains all my configs of my Commonly used software
+eg. VIM, tmux.
 
 # golang `CtrlPBufTag` command support
-Add the following to ~/.ctags:
+Add the following to ~/.ctags to make ctags support golang
 ```shell
 --langdef=Go
 --langmap=Go:.go
@@ -13,5 +10,8 @@ Add the following to ~/.ctags:
 --regex-Go=/var[ \t]+([a-zA-Z_][a-zA-Z0-9_]+)/\1/d,var/
 --regex-Go=/type[ \t]+([a-zA-Z_][a-zA-Z0-9_]+)/\1/d,type/
 ```
-https://github.com/jordwalke/VimBox/blob/master/dotVim/pluginRc/ctrlPVimRc  
-http://go-wise.blogspot.jp/2011/09/using-ctags-with-go.html  
+
+**Reference**
+
+[https://github.com/jordwalke/VimBox/blob/master/dotVim/pluginRc/ctrlPVimRc](https://github.com/jordwalke/VimBox/blob/master/dotVim/pluginRc/ctrlPVimRc) 
+[http://go-wise.blogspot.jp/2011/09/using-ctags-with-go.html](http://go-wise.blogspot.jp/2011/09/using-ctags-with-go.html) 
