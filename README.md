@@ -2,7 +2,9 @@ This repository contains all my configs of my Commonly used software
 eg. VIM, tmux.
 
 # golang `CtrlPBufTag` command support
+
 Add the following to ~/.ctags to make ctags support golang
+
 ```shell
 --langdef=Go
 --langmap=Go:.go
@@ -24,7 +26,7 @@ alias tmux="TERM=screen-256color-bce tmux"
 ```
 
 And set up the default-terminal option in ~/.tmux.conf:
-```
+```shell
 set -g default-terminal "xterm"
 
 ```
