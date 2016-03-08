@@ -22,7 +22,7 @@ Add the following to ~/.ctags to make ctags support golang
 you should add below code to your shell profile:
 
 ```shell
-alias tmux="TERM=screen-256color-bce tmux"
+alias tmux="tmux -2"
 ```
 
 And set up the default-terminal option in ~/.tmux.conf:
