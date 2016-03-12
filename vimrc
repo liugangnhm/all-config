@@ -174,7 +174,7 @@ map <C-t> :CtrlPBuffer<cr>
 "
 "
 " ctrlp search file name only
-let g:ctrlp_by_filename = 1
+let g:ctrlp_by_filename = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
 "set mouse=a
