@@ -109,6 +109,7 @@ set t_Co=256
 
 if has('gui_running')
 	colorscheme molokai
+	set guioptions-=T
 else
 	let g:solarized_termcolors=256
 	colorscheme molokai
