@@ -251,6 +251,7 @@ inoremap <C-l> <esc><esc>lli
 inoremap <M-l> <esc><esc>A
 nnoremap <Leader>cpw viw"+y
 nnoremap <Leader>pl :CtrlPLine<cr>
+nnoremap <Leader>pq :CtrlPQuickFix<cr>
 "inoremap <esc> <nop>
 " }}}
 " comment key {{{
