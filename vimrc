@@ -56,7 +56,7 @@ Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'KabbAmine/zeavim.vim'
 Plugin 'tell-k/vim-autopep8'
 Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'takac/vim-fontmanager'
+"Plugin 'takac/vim-fontmanager'
 Plugin 'easymotion/vim-easymotion'
 
 call vundle#end()            " required
