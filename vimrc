@@ -56,6 +56,8 @@ Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'KabbAmine/zeavim.vim'
 Plugin 'tell-k/vim-autopep8'
 Plugin 'MattesGroeger/vim-bookmarks'
+Plugin 'takac/vim-fontmanager'
+Plugin 'easymotion/vim-easymotion'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -191,7 +193,7 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 "let g:airline_theme='delek'
 
 " cursor always on the middle of window
-set so=999
+set so=10
 
 
 " This selects the next closest text object.
@@ -247,9 +249,11 @@ inoremap jk <esc><esc>:w<cr>
 nnoremap ss :w<cr>
 nnoremap <SPACE> :
 " move left in insert mode
-inoremap <C-l> <esc><esc>lli
+inoremap jl <esc><esc>lli
 " move to end of line in insert mode
-inoremap <M-l> <esc><esc>A
+inoremap je <esc><esc>A
+" new line in insert mode
+inoremap jo <Esc><Esc>o
 nnoremap <Leader>cpw viw"+y
 nnoremap <Leader>pl :CtrlPLine<cr>
 nnoremap <Leader>pq :CtrlPQuickFix<cr>
@@ -311,7 +315,7 @@ let g:gitgutter_highlight_lines = 1
 let g:tagbar_width = 30
 set wrap
 set linebreak
-set showbreak=\ \ \ \  
+set showbreak=\ \ \ \ \ \ \ \ 
 set clipboard=exclude:.*
 
 if has("autocmd")
@@ -319,9 +323,6 @@ if has("autocmd")
 endif
 nnoremap <c-b> k8
 nnoremap <c-f> j8
-
-" new line in insert mode
-inoremap <S-CR> <Esc>o
 
 " auto load changed file
 set autoread
