@@ -157,6 +157,7 @@ autocmd BufWritePre *.go :GoImports
 map <F6> :NERDTreeToggle<cr>
 
 " -------------- Key Mapping
+let mapleader = ','
 let g:go_def_mapping_enabled=0
 map <2-LeftMouse> gd
 map <RightMouse> <C-o>
