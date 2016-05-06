@@ -312,7 +312,6 @@ endfunction
 nnoremap <F11> :cn<cr>
 noremap <c-F11> :cp<cr>
 
-let g:gitgutter_highlight_lines = 1
 let g:tagbar_width = 30
 set wrap
 set linebreak
