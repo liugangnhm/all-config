@@ -220,6 +220,7 @@ function g:GolangOption()
   endif
 endfunction
 autocmd FileType * call g:GolangOption()
+let g:go_list_type = "quickfix"
 
 " set font {{{
 function g:SetFont()
