@@ -58,6 +58,7 @@ Plugin 'tell-k/vim-autopep8'
 Plugin 'MattesGroeger/vim-bookmarks'
 "Plugin 'takac/vim-fontmanager'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'grep.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -221,6 +222,13 @@ function g:GolangOption()
 endfunction
 autocmd FileType * call g:GolangOption()
 let g:go_list_type = "quickfix"
+
+function Search_Golang_Func_Definition()
+	let w = expand("<cword>") " 在当前光标位置抓词
+	execute "Egrep -nr ^func\\ (.*)\\ " . w . "\\( **/*.go"
+endfunction
+nnorem <leader>gf :call Search_Golang_Func_Definition()<cr>
+
 
 " set font {{{
 function g:SetFont()
