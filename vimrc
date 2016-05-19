@@ -204,7 +204,7 @@ map <F12> :ccl<cr>:lcl<cr>
 map <Leader>sw :call Search_Word()<CR>:botright copen<CR>
 map <Leader>ag :Ag<CR>
 
-map <C-t> :CtrlPBuffer<cr>
+map <leader>t :CtrlPBuffer<cr>
 "map :copen<CR>:botright copen<CR>
 "map :cwindow<CR>:botright cwindow<CR>
 
@@ -314,28 +314,6 @@ augroup filetype_vim
 	" found vimscript automatic
 	autocmd FileType vim setlocal foldmethod=marker 
 augroup END
-" }}}
-" auto jump to tagbar and search tag and then jump to tag{{{
-let g:has_exit_ctrlp_buf = 0
-function g:EnterEnter()
-	let g:has_exit_ctrlp_buf = 1
-	execute "sleep 100m"
-	if g:has_exit_ctrlp_buf 
-		echom "has exit buf"
-		execute "call feedkeys(\"\<CR>\")"
-		let g:has_exit_ctrlp_buf = 0
-	endif
-endfunction
-
-function g:SearchTagAndJump()
-  let g:ctrlp_buffer_func = {
-    \ 'exit':  'g:EnterEnter',
-    \ }
-	execute "CtrlPLine __Tagbar__"
-	let g:ctrlp_buffer_func = {}
-endfunction 
-"nnoremap <leader>t :CtrlPLine __Tagbar__<cr>
-nnoremap <leader>t :call g:SearchTagAndJump()<cr>
 " }}}
 " ctrlp tag bin
 let g:ctrlp_buftag_types = {
