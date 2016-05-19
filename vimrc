@@ -86,6 +86,7 @@ set softtabstop=4
 set autoindent
 set nu
 set completeopt=longest,menu
+let mapleader = ','
 " }}}
 " ycm config {{{
 "let g:ycm_global_ycm_extra_conf = '~/bin/.ycm_extra_conf.py'
@@ -102,7 +103,8 @@ let g:ycm_cache_omnifunc=0
 let g:ycm_complete_in_strings = 1
 ""\u6ce8\u91ca\u548c\u5b57\u7b26\u4e32\u4e2d\u7684\u6587\u5b57\u4e5f\u4f1a\u88ab\u6536\u5165\u8865\u5168
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
-nmap <M-g> :YcmCompleter GoToDefinitionElseDeclaration <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>jd :YcmCompleter GoToDefinition<CR>
+nmap <leader>jc :YcmCompleter GoToDeclaration<CR>
 " }}}
 
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -193,7 +195,6 @@ autocmd BufWritePre *.go :GoImports
 map <F6> :NERDTreeToggle<cr>
 
 " -------------- Key Mapping
-let mapleader = ','
 let g:go_def_mapping_enabled=0
 map <2-LeftMouse> gd
 map <RightMouse> <C-o>
@@ -351,3 +352,7 @@ let g:autopep8_disable_show_diff=1
 let g:bookmark_highlight_lines = 1
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_close = 1
+
+" tag key binds
+nnoremap <leader>n :tn<cr>
+nnoremap <leader>v :tp<cr>
