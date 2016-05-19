@@ -11,7 +11,7 @@ eg. VIM, tmux.
 
 Add the following to ~/.ctags to make ctags support golang
 
-```shell
+```
 --langdef=Go
 --langmap=Go:.go
 --regex-Go=/func([ \t]+\([^)]+\))?[ \t]+([a-zA-Z0-9_]+)/\2/d,func/
