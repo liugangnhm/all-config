@@ -59,6 +59,10 @@ Plugin 'MattesGroeger/vim-bookmarks'
 "Plugin 'takac/vim-fontmanager'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'grep.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'brookhong/cscope.vim'
+Plugin 'Chiel92/vim-autoformat'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -89,12 +93,12 @@ set completeopt=longest,menu
 let mapleader = ','
 " }}}
 " ycm config {{{
-"let g:ycm_global_ycm_extra_conf = '~/bin/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_min_num_of_chars_for_completion = 1
 "let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_seed_identifiers_with_syntax=1 
+let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments = 0
 let g:ycm_collect_identifiers_from_tags_files = 0
@@ -126,70 +130,71 @@ map <C-A> :A<cr>
 
 " tagbar_type_go {{{
 let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-	\ }
+			\ 'ctagstype' : 'go',
+			\ 'kinds'     : [
+			\ 'p:package',
+			\ 'i:imports:1',
+			\ 'c:constants',
+			\ 'v:variables',
+			\ 't:types',
+			\ 'n:interfaces',
+			\ 'w:fields',
+			\ 'e:embedded',
+			\ 'm:methods',
+			\ 'r:constructor',
+			\ 'f:functions'
+			\ ],
+			\ 'sro' : '.',
+			\ 'kind2scope' : {
+			\ 't' : 'ctype',
+			\ 'n' : 'ntype'
+			\ },
+			\ 'scope2kind' : {
+			\ 'ctype' : 't',
+			\ 'ntype' : 'n'
+			\ },
+			\ 'ctagsbin'  : 'gotags',
+			\ 'ctagsargs' : '-sort -silent'
+			\ }
 
 " }}}
 
-let g:tagbar_type_cpp = {
-    \ 'kinds' : [
-         \ 'c:classes:0:1',
-         \ 'd:macros:0:1',
-         \ 'e:enumerators:0:0', 
-         \ 'f:functions:0:1',
-         \ 'g:enumeration:0:1',
-         \ 'l:local:0:1',
-         \ 'm:members:0:1',
-         \ 'n:namespaces:0:1',
-         \ 'p:functions_prototypes:0:1',
-         \ 's:structs:0:1',
-         \ 't:typedefs:0:1',
-         \ 'u:unions:0:1',
-         \ 'v:global:0:1',
-         \ 'x:external:0:1'
-     \ ],
-     \ 'sro'        : '::',
-     \ 'kind2scope' : {
-         \ 'g' : 'enum',
-         \ 'n' : 'namespace',
-         \ 'c' : 'class',
-         \ 's' : 'struct',
-         \ 'u' : 'union'
-     \ },
-     \ 'scope2kind' : {
-         \ 'enum'      : 'g',
-         \ 'namespace' : 'n',
-         \ 'class'     : 'c',
-         \ 'struct'    : 's',
-         \ 'union'     : 'u'
-     \ }
-\ }
+"let g:tagbar_type_cpp = {
+"    \ 'kinds' : [
+"         \ 'c:classes:0:1',
+"         \ 'd:macros:0:1',
+"         \ 'e:enumerators:0:0',
+"         \ 'f:functions:0:1',
+"         \ 'g:enumeration:0:1',
+"         \ 'l:local:0:1',
+"         \ 'm:members:0:1',
+"         \ 'n:namespaces:0:1',
+"         \ 'p:functions_prototypes:0:1',
+"         \ 's:structs:0:1',
+"         \ 't:typedefs:0:1',
+"         \ 'u:unions:0:1',
+"         \ 'v:global:0:1',
+"         \ 'x:external:0:1'
+"     \ ],
+"     \ 'sro'        : '::',
+"     \ 'kind2scope' : {
+"         \ 'g' : 'enum',
+"         \ 'n' : 'namespace',
+"         \ 'c' : 'class',
+"         \ 's' : 'struct',
+"         \ 'u' : 'union'
+"     \ },
+"     \ 'scope2kind' : {
+"         \ 'enum'      : 'g',
+"         \ 'namespace' : 'n',
+"         \ 'class'     : 'c',
+"         \ 'struct'    : 's',
+"         \ 'union'     : 'u'
+"     \ }
+"\ }
 
 autocmd BufWritePre *.go :GoImports
+"au BufWritePre * :Autoformat
 "autocmd BufReadPost * :NERDTree
 "bind NERDTree triggle
 map <F6> :NERDTreeToggle<cr>
@@ -246,14 +251,14 @@ map <BS> <Plug>(expand_region_shrink)
 
 " golang
 function g:GolangOption()
-  if &filetype=="go" 
-	  let g:go_oracle_scope='github.com'
-	  map <C-D> :GoDef<CR>
-	  map <F3> :GoChannelPeers<CR>
-	  map <F4> :GoImplements<CR>
-	  map <F5> :GoReferrers<CR>
-	  nnoremap <leader>ft :GoTestFunc<cr>
-  endif
+	if &filetype=="go"
+		let g:go_oracle_scope='github.com'
+		map <C-D> :GoDef<CR>
+		map <F3> :GoChannelPeers<CR>
+		map <F4> :GoImplements<CR>
+		map <F5> :GoReferrers<CR>
+		nnoremap <leader>ft :GoTestFunc<cr>
+	endif
 endfunction
 autocmd FileType * call g:GolangOption()
 let g:go_list_type = "quickfix"
@@ -287,7 +292,7 @@ autocmd FileType qf wincmd J
 
 let g:ctrlp_follow_symlinks = 2
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
-                          \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+			\ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 " convenient key maps {{{
 inoremap jk <esc><esc>:w<cr>
 nnoremap ss :w<cr>
@@ -299,7 +304,8 @@ inoremap je <esc><esc>A
 " new line in insert mode
 inoremap jo <Esc><Esc>o
 nnoremap <Leader>cpw viw"+y
-nnoremap <Leader>pl :CtrlPLine<cr>
+nnoremap <Leader>pl :BLines<cr>
+nnoremap <Leader>p :Files<cr>
 nnoremap <Leader>pq :CtrlPQuickFix<cr>
 "inoremap <esc> <nop>
 " }}}
@@ -311,15 +317,15 @@ autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
 " }}}
 " Vimscript file settings ---------------------- {{{
 augroup filetype_vim
-    autocmd!
+	autocmd!
 	" found vimscript automatic
-	autocmd FileType vim setlocal foldmethod=marker 
+	autocmd FileType vim setlocal foldmethod=marker
 augroup END
 " }}}
 " ctrlp tag bin
 let g:ctrlp_buftag_types = {
-	\ 'go'     	   : '--language-force=go --golang-types=ftv',
-    \ }
+			\ 'go'		   : '--language-force=go --golang-types=ftv',
+			\ }
 
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%81v.\+/
@@ -327,7 +333,7 @@ let g:ctrlp_buftag_types = {
 
 au FileType qf call AdjustWindowHeight(5, 20)
 function! AdjustWindowHeight(minheight, maxheight)
-  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+	exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
 nnoremap <F11> :cn<cr>
@@ -336,11 +342,11 @@ noremap <c-F11> :cp<cr>
 let g:tagbar_width = 30
 set wrap
 set linebreak
-set showbreak=\ \ \ \ \ \ \ \ 
+set showbreak=\ \ \ \ \ \ \ \
 set clipboard=exclude:.*
 
 if has("autocmd")
-  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " auto load changed file
@@ -356,3 +362,21 @@ let g:bookmark_auto_close = 1
 " tag key binds
 nnoremap <leader>n :tn<cr>
 nnoremap <leader>v :tp<cr>
+
+" cscope key map
+" s: Find this C symbol
+nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+" g: Find this definition
+nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+" d: Find functions called by this function
+nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+" c: Find functions calling this function
+nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+" t: Find this text string
+nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+" e: Find this egrep pattern
+nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+" f: Find this file
+nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+" i: Find files #including this file
+nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
