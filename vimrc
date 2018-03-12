@@ -1,134 +1,142 @@
-" bundle code and plugin {{{
+" Plugin section {{{
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+"call plug#begin('~/.vim/plugged')
+"if has('nvim')
+"call plug#begin('~/.local/share/nvim/plugged')
+"else
+"call plug#begin('~/.vim/plugged')
+"endif
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'L9'
-"Plugin 'git://git.wincent.com/command-t.git'
-"Plugin 'file:///home/gmarik/path/to/plugin'
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"Plugin 'user/L9', {'name': 'newL9'}
+Plugin 'junegunn/vim-easy-align'
+Plugin 'fatih/vim-go'
+Plugin 'nsf/gocode'
+Plugin 'junegunn/fzf'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'SirVer/ultisnips'
-" " Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-"Plugin 'vim-scripts/taglist.vim'
+Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'vim-scripts/a.vim'
-Plugin 'fatih/vim-go'
-Plugin 'molokai'
-Plugin 'majutsushi/tagbar'
-" auto close brace
-"Plugin 'Townk/vim-autoclose'
-Plugin 'scrooloose/nerdtree'
-"Plugin 'brookhong/k.vim'
-"Plugin 'mileszs/ack.vim'
-Plugin 'rking/ag.vim'
-Plugin 'bling/vim-airline'
-Plugin 'altercation/vim-colors-solarized'
-" smooth scroll
-"Plugin 'yonchu/accelerated-smooth-scroll'
-Plugin 'vim-scripts/cmdline-completion'
-Plugin 'airblade/vim-gitgutter'
-"Plugin 'gcmt/wildfire.vim'
-Plugin 'terryma/vim-expand-region'
-"Plugin 'fabi1cazenave/kalahari.vim'
-"Plugin 'justincampbell/vim-railscasts'
-"Plugin 'vim-scripts/abbott.vim'
-Plugin 'jiangmiao/auto-pairs'
-" Plugin 'scrooloose/syntastic'
-" auto tag update
-"Plugin 'vim-scripts/AutoTag'
-"Plugin 'craigemery/vim-autotag'
-Plugin 'tacahiroy/ctrlp-funky'
-"Plugin 'szw/vim-tags'
-Plugin 'godlygeek/csapprox'
-Plugin 'sheerun/vim-wombat-scheme'
 Plugin 'FelikZ/ctrlp-py-matcher'
-Plugin 'KabbAmine/zeavim.vim'
-Plugin 'tell-k/vim-autopep8'
-Plugin 'MattesGroeger/vim-bookmarks'
-"Plugin 'takac/vim-fontmanager'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'grep.vim'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'brookhong/cscope.vim'
-Plugin 'Chiel92/vim-autoformat'
+Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'jeetsukumaran/ctrlp-pythonic.vim'
+Plugin 'bling/vim-airline'
+Plugin 'SirVer/ultisnips'
+Plugin 'scrooloose/nerdtree'
 
+if has('nvim')
+	Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	Plugin 'zchee/deoplete-go', { 'do': 'make'}
+	Plugin 'davidhalter/jedi'
+	Plugin 'zchee/deoplete-jedi'
+	"Plugin 'Shougo/neosnippet'
+	"Plugin 'Shougo/neosnippet-snippets'
+endif
+Plugin 'tell-k/vim-autopep8'
+Plugin 'Yggdroot/indentLine'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'pelodelfuego/vim-swoop'
+" snippets
+"Plugin 'honza/vim-snippets'
+Plugin 'molokai'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'rhysd/vim-clang-format'
+
+"call plug#end()
 call vundle#end()            " required
 filetype plugin indent on    " required
-syntax on
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList          - list configured plugins
-" :PluginInstall(!)    - install (update) plugins
-" :PluginSearch(!) foo - search (or refresh cache first) for foo
-" :PluginClean(!)      - confirm (or auto-approve) removal of unused plugins
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 " }}}
-" basic vim config {{{
+" neovim {{{
+if has('nvim')
+	let g:deoplete#enable_at_startup = 1
+	" deoplete tab-complete
+	inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+	let g:deoplete#auto_complete_start_length = 1
+	let g:go_term_mode = "split"
+	"let g:python_host_prog = '/usr/local/bin/python2'
+	"let g:python3_host_prog = '/usr/local/bin/python3'
+	let g:deoplete#sources#go#gocode_binary = '~/Dev/gopath'
+	let g:deoplete#sources#go#package_dot = 1
+	let g:deoplete#sources#go#sort_class = ['const','package', 'func', 'type', 'var']
+	let g:deoplete#sources#go#auto_goos = 1
+	let b:deoplete_disable_auto_complete = 0
+endif
+" }}}
+"python config{{{ 
+function g:PythonOption()
+	if &filetype=="python"
+		nnoremap <C-e> :CtrlPPythonic<Cr>
+	endif
+endfunction
+autocmd FileType python call g:PythonOption()
+
+let g:deoplete#sources#jedi#python_path="/usr/local/bin/python3"
+let g:deoplete#sources#jedi#show_docstring=1
+"}}}
+" format and indent {{{
+syntax enable
 set hlsearch
 set incsearch
 set ignorecase
 set cin
-set sw=4
-set tabstop=4
-set softtabstop=4
+set sw=2
+set tabstop=2
+set softtabstop=2
 set autoindent
 set nu
-set completeopt=longest,menu
-let mapleader = ','
+set foldmethod=marker
+" cursor always on the middle of window
+set so=10
 " }}}
-" ycm config {{{
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_min_num_of_chars_for_completion = 1
-"let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_confirm_extra_conf=0
-let g:ycm_complete_in_comments = 0
-let g:ycm_collect_identifiers_from_tags_files = 0
-let g:ycm_cache_omnifunc=0
-"\u5728\u5b57\u7b26\u4e32\u8f93\u5165\u4e2d\u4e5f\u80fd\u8865\u5168
-let g:ycm_complete_in_strings = 1
-""\u6ce8\u91ca\u548c\u5b57\u7b26\u4e32\u4e2d\u7684\u6587\u5b57\u4e5f\u4f1a\u88ab\u6536\u5165\u8865\u5168
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
-nmap <leader>jd :YcmCompleter GoToDefinition<CR>
-nmap <leader>jc :YcmCompleter GoToDeclaration<CR>
-" }}}
-
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<m-j>"
-let g:UltiSnipsJumpBackwardTrigger="<m-j>"
-let g:UltiSnipsEditSplit="vertical"
-set t_Co=256
-
-if has('gui_running')
-	colorscheme molokai
-	set guioptions-=T
-else
+" set font {{{
+function g:SetFont()
+	if has('mac')
+		set guifont=Sauce\ Code\ Powerline\:h13
+	else
+		set guifont=Source\ Code\ Pro\ for\ Powerline\ Bold\ 13
+		let g:PowerlineSymbols='fancy'
+		set encoding=utf8
+	endif
 	let g:solarized_termcolors=256
 	colorscheme molokai
-endif
+endfunction
+autocmd VimEnter * call g:SetFont()
+" }}}
+" Key Bind Common{{{
+let mapleader = ','
+inoremap jk <esc><esc>:w<cr>
+nnoremap ss :w<cr>
+nnoremap <SPACE> :
+" move left in insert mode
+inoremap jl <esc><esc>lli
+" move to end of line in insert mode
+inoremap je <esc><esc>A
+" new line in insert mode
+inoremap jo <Esc><Esc>o
+" }}}
+" tagbar config {{{
+map <F9> :TagbarToggle<cr>
+" }}}
+" Golang {{{
+function g:GolangOption()
+	if &filetype=="go"
+		let g:go_oracle_scope='github.com'
+		map <C-D> :GoDef<CR>
+		map <F3> :GoChannelPeers<CR>
+		map <F4> :GoImplements<CR>
+		map <F5> :GoReferrers<CR>
+		map <C-R> :GoDecls<CR>
+		nnoremap <leader>ft :GoTestFunc<cr>
+	endif
+endfunction
+autocmd FileType go call g:GolangOption()
 
-hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
-map <C-A> :A<cr>
-
-" tagbar_type_go {{{
 let g:tagbar_type_go = {
 			\ 'ctagstype' : 'go',
 			\ 'kinds'     : [
@@ -156,227 +164,71 @@ let g:tagbar_type_go = {
 			\ 'ctagsbin'  : 'gotags',
 			\ 'ctagsargs' : '-sort -silent'
 			\ }
-
-" }}}
-
-"let g:tagbar_type_cpp = {
-"    \ 'kinds' : [
-"         \ 'c:classes:0:1',
-"         \ 'd:macros:0:1',
-"         \ 'e:enumerators:0:0',
-"         \ 'f:functions:0:1',
-"         \ 'g:enumeration:0:1',
-"         \ 'l:local:0:1',
-"         \ 'm:members:0:1',
-"         \ 'n:namespaces:0:1',
-"         \ 'p:functions_prototypes:0:1',
-"         \ 's:structs:0:1',
-"         \ 't:typedefs:0:1',
-"         \ 'u:unions:0:1',
-"         \ 'v:global:0:1',
-"         \ 'x:external:0:1'
-"     \ ],
-"     \ 'sro'        : '::',
-"     \ 'kind2scope' : {
-"         \ 'g' : 'enum',
-"         \ 'n' : 'namespace',
-"         \ 'c' : 'class',
-"         \ 's' : 'struct',
-"         \ 'u' : 'union'
-"     \ },
-"     \ 'scope2kind' : {
-"         \ 'enum'      : 'g',
-"         \ 'namespace' : 'n',
-"         \ 'class'     : 'c',
-"         \ 'struct'    : 's',
-"         \ 'union'     : 'u'
-"     \ }
-"\ }
-
 autocmd BufWritePre *.go :GoImports
-"au BufWritePre * :Autoformat
-"autocmd BufReadPost * :NERDTree
-"bind NERDTree triggle
-map <F6> :NERDTreeToggle<cr>
-
-" -------------- Key Mapping
-let g:go_def_mapping_enabled=0
-map <2-LeftMouse> gd
-map <RightMouse> <C-o>
-map <F9> :TagbarToggle<cr>
-map <C-x> :q<cr>
-map <F10> :cw<cr>
-map <F12> :ccl<cr>:lcl<cr>
-map <Leader>sw :call Search_Word()<CR>:botright copen<CR>
-map <Leader>ag :Ag<CR>
-
-map <leader>t :CtrlPBuffer<cr>
-"map :copen<CR>:botright copen<CR>
-"map :cwindow<CR>:botright cwindow<CR>
-
-" show byte-offset in status bar
-" set statusline+=%o
-"
-"
-"
-" ctrlp search file name only
-let g:ctrlp_by_filename = 0
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-
-"set mouse=a
-
-nnoremap <C-r> :CtrlPBufTag <cr>
-nnoremap <C-e> :CtrlPTag <cr>
-let g:ctrlp_working_path_mode = '0'
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-let g:airline_powerline_fonts = 1
-
-autocmd VimEnter * nested :call tagbar#autoopen(1)
-"let g:airline_theme='delek'
-
-" cursor always on the middle of window
-set so=10
 
 
-" This selects the next closest text object.
-" let g:wildfire_fuel_map = "<ENTER>"
-
-" This selects the previous closest text object.
-" let g:wildfire_water_map = "<BS>"
-" let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "ip", "it"]
-
-map <SPACE> <Plug>(expand_region_expand)
-map <BS> <Plug>(expand_region_shrink)
-
-" golang
-function g:GolangOption()
-	if &filetype=="go"
-		let g:go_oracle_scope='github.com'
-		map <C-D> :GoDef<CR>
-		map <F3> :GoChannelPeers<CR>
-		map <F4> :GoImplements<CR>
-		map <F5> :GoReferrers<CR>
-		nnoremap <leader>ft :GoTestFunc<cr>
-	endif
-endfunction
-autocmd FileType * call g:GolangOption()
-let g:go_list_type = "quickfix"
-
-function Search_Golang_Func_Definition()
-	let w = expand("<cword>") " 在当前光标位置抓词
-	execute "Egrep -nr ^func\\ (.*)\\ " . w . "\\( **/*.go"
-endfunction
-nnorem <leader>gf :call Search_Golang_Func_Definition()<cr>
-
-
-" set font {{{
-function g:SetFont()
-	if has('mac')
-		set guifont=Sauce\ Code\ Powerline\:h13
-	else
-		set guifont=Source\ Code\ Pro\ for\ Powerline\ Bold\ 13
-		let g:PowerlineSymbols='fancy'
-		set encoding=utf8
-	endif
-endfunction
-autocmd VimEnter * call g:SetFont()
+"let g:go_auto_type_info = 1
+let g:go_info_mode = 'gocode'
+"let g:go_auto_sameids = 1
 " }}}
-
-autocmd FileType qf wincmd J
-
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
+" CtrlP Config{{{
 let g:ctrlp_follow_symlinks = 2
 let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 			\ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
-" convenient key maps {{{
-inoremap jk <esc><esc>:w<cr>
-nnoremap ss :w<cr>
-nnoremap <SPACE> :
-" move left in insert mode
-inoremap jl <esc><esc>lli
-" move to end of line in insert mode
-inoremap je <esc><esc>A
-" new line in insert mode
-inoremap jo <Esc><Esc>o
-nnoremap <Leader>cpw viw"+y
-nnoremap <Leader>pl :BLines<cr>
-nnoremap <Leader>p :Files<cr>
-nnoremap <Leader>pq :CtrlPQuickFix<cr>
-"inoremap <esc> <nop>
-" }}}
-" comment key {{{
-autocmd FileType javascript nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
-autocmd FileType go nnoremap <buffer> <leader>c I//<esc>j<esc>I<esc>
-autocmd FileType python nnoremap <buffer> <leader>c I#<esc>j<esc>I<esc>
-autocmd FileType vim nnoremap <buffer> <leader>c I"<esc>j<esc>I<esc>
-" }}}
-" Vimscript file settings ---------------------- {{{
-augroup filetype_vim
-	autocmd!
-	" found vimscript automatic
-	autocmd FileType vim setlocal foldmethod=marker
-augroup END
-" }}}
-" ctrlp tag bin
 let g:ctrlp_buftag_types = {
 			\ 'go'		   : '--language-force=go --golang-types=ftv',
 			\ }
+map <leader>t :CtrlPBuffer<cr>
+let g:ctrlp_by_filename = 0
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
-"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-"match OverLength /\%81v.\+/
+" buff tag map key
+"function g:SetBufferTagMap()
+"if &filetype!="go"
+"        nnoremap <C-r> :CtrlPBufTag <cr>
+"	endif
+"endfunction
+"autocmd FileType * call g:SetBufferTagMap()
 
+nnoremap <C-e> :CtrlPTag <cr>
+let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_extensions = ['pythonic']
+
+" }}}
+" Airline Config{{{
+let g:airline_powerline_fonts = 1
+" }}}
+" Snip {{{
+let g:UltiSnipsExpandTrigger="<C-J>>"
+"imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+"smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+"xmap <C-j>     <Plug>(neosnippet_expand_target)
+
+"imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+let g:neosnippet#snippets_directory='~/.local/share/nvim/plugged/vim-snippets'
+" }}}
+" NERDTree {{{
+map <F6> :NERDTreeToggle<cr>
+" }}}
+" quickfix {{{
 
 au FileType qf call AdjustWindowHeight(5, 20)
 function! AdjustWindowHeight(minheight, maxheight)
 	exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
+set errorformat+=%f:%l:\ %m
 
-nnoremap <F11> :cn<cr>
-noremap <c-F11> :cp<cr>
+" }}}
 
-let g:tagbar_width = 30
-set wrap
-set linebreak
-set showbreak=\ \ \ \ \ \ \ \
-set clipboard=exclude:.*
-
-if has("autocmd")
-	au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-" auto load changed file
+"{{{ ycm
+let g:ycm_min_num_of_chars_for_completion = 1
+"}}}
+" auto load file
 set autoread
-
-let g:autopep8_disable_show_diff=1
-
-" bookmark options
-let g:bookmark_highlight_lines = 1
-let g:bookmark_save_per_working_dir = 1
-let g:bookmark_auto_close = 1
-
-" tag key binds
-nnoremap <leader>n :tn<cr>
-nnoremap <leader>v :tp<cr>
-
-" cscope key map
-" s: Find this C symbol
-nnoremap  <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
-" g: Find this definition
-nnoremap  <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
-" d: Find functions called by this function
-nnoremap  <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
-" c: Find functions calling this function
-nnoremap  <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
-" t: Find this text string
-nnoremap  <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
-" e: Find this egrep pattern
-nnoremap  <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
-" f: Find this file
-nnoremap  <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
-" i: Find files #including this file
-nnoremap  <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
