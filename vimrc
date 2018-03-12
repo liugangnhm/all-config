@@ -218,12 +218,24 @@ let g:neosnippet#snippets_directory='~/.local/share/nvim/plugged/vim-snippets'
 map <F6> :NERDTreeToggle<cr>
 " }}}
 " quickfix {{{
+" Open quickfix window when text adds to it
+augroup vimrc
+  autocmd QuickFixCmdPost * botright copen 8
+augroup END
 
 au FileType qf call AdjustWindowHeight(5, 20)
 function! AdjustWindowHeight(minheight, maxheight)
 	exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
+" for pt asyncrun
 set errorformat+=%f:%l:\ %m
+
+" search for current file or buf
+function g:PtCurrentWord()
+	execute ":AsyncRun pt <cword> --nocolor --nogroup \%:p"
+	execute ":cw"
+endfunction
+nnoremap <leader>sS :call g:PtCurrentWord()<cr>
 
 " }}}
 
