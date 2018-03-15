@@ -258,6 +258,11 @@ let g:EasyMotion_smartcase = 1
 " map <Leader>k <Plug>(easymotion-k)
 "}}}
 
++"{{{C/C++
++nnoremap <C-a> :A<cr>
++"}}}
+
+
 "{{{ ycm
 let g:ycm_min_num_of_chars_for_completion = 1
 "}}}
